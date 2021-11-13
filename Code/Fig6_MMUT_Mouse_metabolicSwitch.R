@@ -1,6 +1,13 @@
-# wd
-Dropbox/PF/Post_PhD/Zurich_2019_2022/MMUT_Mouse_metabolicSwitch
-setwd("/Volumes/PFT7/Dropbox/PF/Post_PhD/Zurich_2019_2022/MMUT_Mouse_metabolicSwitch")
+### METABOLIC SWITCH IN A MOUSE MODEL OF METHYLMALONIC ACIDURIA
+# FIGURE 6
+
+# author: Patrick Forny
+
+# run R one level above the Code directory. Create folders Data and Figs to start with.
+## folders:
+# Code: scripts
+# Data: data for analyses
+# Figs: output of analyses
 
 
 # libraries
@@ -9,21 +16,23 @@ require(ggplot2)
 require(tidyverse)
 require(readxl)
 require(ggpubr)
-library(cowplot)
+require(cowplot)
 
 
 # color pallette (manual): order:
 # female-KI/WT; female-KO/KI
 # male_KI/WT; male-KO/KI
-# middle color female: #FF8100
-# middle color male: #008080
 mypal = c("#ffa64c", "#b25a00", "#66b2b2", "#004c4c")
 mylvls = c("f_Mmut-ki/wt", "f_Mmut-ko/ki", "m_Mmut-ki/wt", "m_Mmut-ko/ki")
 
 # create figures path
 system("mkdir Figs")
-system("mkdir Figs/v3")
-fig_path <- c("Figs/v3/")
+system("mkdir Figs/v19")
+fig_path <- c("Figs/v19/")
+
+system("mkdir Figs")
+system("mkdir Figs/tablesv19")
+fig_tbl_path <- c("Figs/tablesv19/")
 
 
 
@@ -35,31 +44,17 @@ fig_path <- c("Figs/v3/")
 
 # theme & info:
 # impaired glucose tolerance
-# a. fasting glc ipgtt
-# b. glc over time
-# c. auc ipgtt
-# d. fasting glc ipITT
-# e. glc over time percent
-# f. auc ipITT
+# a. glc over time
+# b. auc ipgtt
+# c glc over time percent
+# d. auc ipITT
 
 ####################################################################
 # DATA IMPORT AND TIDY
 ####################################################################
 
 
-
-# # a. fasting glc ipgtt
-
-# tbl6a <- data.table(read_excel("Data/Fig6/PF_Fig6a_fastingGlc.xlsx", col_names = FALSE))
-# setnames(tbl6a, rep(c("cohort1", "cohort2", "type"), 4))
-# tbl6a <- rbind(tbl6a[, 1:3], tbl6a[, 4:6], tbl6a[, 7:9], tbl6a[, 10:12])
-# tbl6a <- melt.data.table(tbl6a, id.vars = "type")
-# tbl6a <- tbl6a[!is.na(value), ]
-# setnames(tbl6a, c("type", "cohort", "value"))
-
-
-
-# b. glc over time
+# glc over time
 
 tbl6b <- data.table(read_excel("Data/Fig6/PF_Fig6b_glcOverTime.xlsx"))
 colnames(tbl6b)
@@ -92,7 +87,7 @@ tbl6b_merge <- rbind(fkiwt6b, fkoki6b, mkiwt6b, mkoki6b)
 
 
 
-# c. auc ipgtt
+# auc ipgtt
 
 tbl6c <- data.table(read_excel("Data/Fig6/PF_Fig6c_AUCipGTT.xlsx", col_names = FALSE))
 setnames(tbl6c, rep(c("cohort1", "cohort2", "type"), 4))
@@ -103,18 +98,7 @@ setnames(tbl6c, c("type", "cohort", "value"))
 
 
 
-# # d. fasting glc ipITT
-
-# tbl6d <- data.table(read_excel("Data/Fig6/PF_Fig6d_fastingGlcipiTT.xlsx"))
-# setnames(tbl6d, rep(c("glc", "type"), 4))
-# tbl6d <- rbind(tbl6d[, 1:2], tbl6d[, 3:4], tbl6d[, 5:6], tbl6d[, 7:8])
-# tbl6d <- melt.data.table(tbl6d, id.vars = "type")
-# tbl6d <- tbl6d[!is.na(value), ]
-# tbl6d[, value_mmol := value*0.0555]
-
-
-
-# e. glc over time percent
+# glc over time percent
 
 tbl6e <- data.table(read_excel("Data/Fig6/PF_Fig6d_glcOverTimePercent.xlsx"))
 colnames(tbl6e)
@@ -148,7 +132,7 @@ tbl6e_merge <- rbind(fkiwt6e, fkoki6e, mkiwt6e, mkoki6e)
 
 
 
-# f. auc ipITT
+# auc ipITT
 
 tbl6f <- data.table(read_excel("Data/Fig6/PF_Fig6f_AUCipiTT.xlsx"))
 setnames(tbl6f, rep(c("glc", "type"), 4))
@@ -165,49 +149,32 @@ tbl6f <- tbl6f[!is.na(value), ]
 
 
 
-# further variables for plotting
-
-margs = c(0.3, 0.3, 0.3, 0.3)
-margin = theme(plot.margin = unit(margs, "cm"))
-
-
 
 ####################################################################
 # PLOTS AND ARRANGE AND SAVE
 ####################################################################
 
 
+margs = c(0.3, 0.3, 0.3, 0.3)
+margin = theme(plot.margin = unit(margs, "cm"))
 
-# a. fasting glc ipgtt
+
 
 compare <- list(mylvls[c(1,2)], mylvls[c(3,4)])
 
 
-# max_val <- max(tbl6a$value)
-# min_val <- min(tbl6a$value)
 
-# plt6a <- 
-# ggplot(tbl6a, aes(x = type, y = value, color = type, fill = type)) +
-# 	geom_boxplot(alpha = 0.6, outlier.shape = NA) +
-# 	geom_jitter(width = 0.1, aes(shape = cohort)) +
-# 	stat_compare_means(comparisons = compare) +
-# 	ylab("Fasting blood glc (ipGTT) [mmol/L]") +
-# 	# ylim(0.9*min_val,1.2*max_val) +
-# 	ylim(0, 17) +
-# 	theme_pubr() +
-# 	rotate_x_text(angle = 45) +
-# 	scale_fill_manual(values = mypal) +
-# 	scale_color_manual(values = mypal) +
-# 	theme(legend.title = element_blank(), legend.position = "none", axis.title.x = element_blank(), axis.text.x = element_blank()) +
-# 	margin
+# glc over time
 
-
-
-
-# b. glc over time
+line_df <- 
+data.frame(dot_x = c(rep(min(tbl6b_merge$time), 4),rep(max(tbl6b_merge$time), 4)),
+	dot_y = rep(tbl6b_merge[time == dot_start_x, ]$mean, 2),
+	type = rep(tbl6b_merge[time == dot_start_x, ]$type, 2)
+)
 
 plt6b <- 
 ggplot(tbl6b_merge, aes(x = time, y = mean, color = type)) +
+	geom_line(data = line_df, aes(x = dot_x, y = dot_y, color = type), inherit.aes = FALSE, linetype = 2) +
 	geom_line() +
 	geom_errorbar(aes(ymin = mean-sd, ymax = mean+sd), alpha = 0.6, width = 2) +
 	geom_point(size = 2) +
@@ -220,7 +187,7 @@ ggplot(tbl6b_merge, aes(x = time, y = mean, color = type)) +
 
 
 
-# c. auc ipgtt
+# auc ipgtt
 
 max_val <- max(tbl6c$value)
 min_val <- min(tbl6c$value)
@@ -241,29 +208,8 @@ ggplot(tbl6c, aes(x = type, y = value, color = type, fill = type)) +
 
 
 
-# # d. fasting glc ipITT
 
-# max_val <- max(tbl6d$value_mmol)
-# min_val <- min(tbl6d$value_mmol)
-
-# plt6d <- 
-# ggplot(tbl6d, aes(x = type, y = value_mmol, color = type, fill = type)) +
-# 	geom_boxplot(alpha = 0.6, outlier.shape = NA) +
-# 	geom_jitter(width = 0.1, shape = 17) +
-# 	stat_compare_means(comparisons = compare) +
-# 	ylab("Fasting blood glc (ipITT) [mmol/L]") +
-# 	# ylim(0.9*min_val,1.2*max_val) +
-# 	ylim(0, 17) +
-# 	theme_pubr() +
-# 	rotate_x_text(angle = 45) +
-# 	scale_fill_manual(values = mypal) +
-# 	scale_color_manual(values = mypal) +
-# 	theme(legend.title = element_blank(), legend.position = "none", axis.title.x = element_blank(), axis.text.x = element_blank()) +
-	# margin
-
-
-
-# e. glc over time percent
+# glc over time percent
 
 plt6e <- 
 ggplot(tbl6e_merge, aes(x = time, y = mean, color = type)) +
@@ -279,7 +225,7 @@ ggplot(tbl6e_merge, aes(x = time, y = mean, color = type)) +
 
 
 
-# f. auc ipITT
+#auc ipITT
 
 max_val <- max(tbl6f$value)
 min_val <- min(tbl6f$value)
@@ -301,14 +247,6 @@ ggplot(tbl6f, aes(x = type, y = value, color = type, fill = type)) +
 
 
 
-
-
-
-
-
-
-# plt6 <-
-# ggarrange(plt6b, plt6c, plt6e, plt6f, labels = "auto", widths = c(1, 1.4, 1), font.label = list(size = 18), common.legend = TRUE, legend = "bottom")
 
 
 plt6 <-

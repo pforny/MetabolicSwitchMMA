@@ -1,5 +1,14 @@
-# wd
-Dropbox/PF/Post_PhD/Zurich_2019_2022/MMUT_Mouse_metabolicSwitch
+### METABOLIC SWITCH IN A MOUSE MODEL OF METHYLMALONIC ACIDURIA
+# FIGURE 7
+
+# author: Patrick Forny
+
+# run R one level above the Code directory. Create folders Data and Figs to start with.
+## folders:
+# Code: scripts
+# Data: data for analyses
+# Figs: output of analyses
+
 
 # libraries
 require(data.table)
@@ -7,19 +16,24 @@ require(ggplot2)
 require(tidyverse)
 require(readxl)
 require(ggpubr)
+require(patchwork)
+
 
 # color pallette (manual): order:
 # female-KI/WT; female-KO/KI
 # male_KI/WT; male-KO/KI
-# middle color female: #FF8100
-# middle color male: #008080
 mypal = c("#ffa64c", "#b25a00", "#66b2b2", "#004c4c")
 mylvls = c("f_Mmut-ki/wt", "f_Mmut-ko/ki", "m_Mmut-ki/wt", "m_Mmut-ko/ki")
 
 # create figures path
 system("mkdir Figs")
-system("mkdir Figs/v3")
-fig_path <- c("Figs/v3/")
+system("mkdir Figs/v19")
+fig_path <- c("Figs/v19/")
+
+system("mkdir Figs")
+system("mkdir Figs/tablesv19")
+fig_tbl_path <- c("Figs/tablesv19/")
+
 
 
 
@@ -35,7 +49,7 @@ fig_path <- c("Figs/v3/")
 # b. transaminases (ALT, ASAT) and ALP
 # c. hallmark metabolites
 # d. MMA in liver
-# e. glucose over time
+
 
 ####################################################################
 # DATA IMPORT AND TIDY
@@ -101,16 +115,15 @@ f7e <- rbind(fkiwt7e, fkoki7e)
 
 
 
-# further variables for plotting
-
-margs = c(0.5, 0.5, 0.5, 0.5)
-margin = theme(plot.margin = unit(margs, "cm"))
-
-
 
 ####################################################################
 # PLOTS AND ARRANGE AND SAVE
 ####################################################################
+
+
+margs = c(0.5, 0.5, 0.5, 0.5)
+margin = theme(plot.margin = unit(margs, "cm"))
+
 
 
 # a. liver weight
@@ -174,7 +187,7 @@ ggplot(tbl7c, aes(x = type, y = value)) +
 	theme_pubr() +
 	scale_fill_manual(values = mypal) +
 	scale_color_manual(values = mypal) +
-	theme(legend.title = element_blank(), legend.position = "bottom", axis.title.x = element_blank(), axis.text.x = element_blank(), strip.background = element_rect(fill = "white")) +
+	theme(legend.title = element_blank(), legend.position = "none", axis.title.x = element_blank(), axis.text.x = element_blank(), strip.background = element_rect(fill = "white")) +
 	margin
 
 
@@ -193,45 +206,21 @@ ggplot(tbl7d, aes(x = type, y = value, color = type, fill = type)) +
 	rotate_x_text(angle = 45) +
 	scale_fill_manual(values = mypal) +
 	scale_color_manual(values = mypal) +
-	theme(legend.title = element_blank(), legend.position = "bottom", axis.title.x = element_blank(), axis.text.x = element_blank()) +
+	theme(legend.title = element_blank(), legend.position = "none", axis.title.x = element_blank(), axis.text.x = element_blank()) +
 	margin
 
 
 
-# e. glucose over time
-
-# plt7e <- 
-# ggplot(f7e, aes(x = time, y = mean, color = type)) +
-# 	geom_line() +
-# 	geom_errorbar(aes(ymin = mean-sd, ymax = mean+sd), alpha = 0.6, width = 2) +
-# 	geom_point(size = 2) +
-# 	ylab("Glucose [mmol/L]") +
-# 	xlab("Time [min]") +
-# 	theme_pubr() +
-# 	scale_color_manual(values = mypal[c(1,2)]) +
-# 	theme(legend.title = element_blank()) +
-# 	margin
-
-
-
-
-
-
-
-plt7_top <-
-ggarrange(plt7a, plt7b, labels = c("a", "b"), widths = c(1, 2.5), common.legend = TRUE, legend = "none")
-
-plt7_bottom <-
-ggarrange(plt7c, plt7d, labels = c("c", "d"), widths = c(2.9, 1), common.legend = TRUE, legend = "none")
 
 plt7 <-
-ggarrange(plt7_top, plt7_bottom, heights = c(1, 1), nrow = 2)
+(plt7a + plt7b + plot_layout(widths=c(1, 3.3))) / (plt7c + plt7d + plot_layout(widths=c(3.8 ,1))) + plot_annotation(tag_levels = 'a') & theme(plot.tag = element_text(face = 'bold'))
 
 
-ggsave(paste(fig_path, "Fig7.png", sep = ""), plt7, device = png(), width = 8, height = 6, bg = "white")
+
+ggsave(paste(fig_path, "Fig7.png", sep = ""), plt7, device = png(), width = 8, height = 6.5, bg = "white")
 dev.off()
 
-ggsave(paste(fig_path, "Fig7.pdf", sep = ""), plt7, device = "pdf", width = 8, height = 6, bg = "white")
+ggsave(paste(fig_path, "Fig7.pdf", sep = ""), plt7, device = "pdf", width = 8, height = 6.5, bg = "white")
 dev.off()
 
 

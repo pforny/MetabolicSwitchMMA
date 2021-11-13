@@ -1,5 +1,14 @@
-# wd
-Dropbox/PF/Post_PhD/Zurich_2019_2022/MMUT_Mouse_metabolicSwitch
+### METABOLIC SWITCH IN A MOUSE MODEL OF METHYLMALONIC ACIDURIA
+# FIGURE 2
+
+# author: Patrick Forny
+
+# run R one level above the Code directory. Create folders Data and Figs to start with.
+## folders:
+# Code: scripts
+# Data: data for analyses
+# Figs: output of analyses
+
 
 # libraries
 require(data.table)
@@ -8,18 +17,21 @@ require(tidyverse)
 require(readxl)
 require(ggpubr)
 
+
 # color pallette (manual): order:
 # female-KI/WT; female-KO/KI
 # male_KI/WT; male-KO/KI
-# middle color female: #FF8100
-# middle color male: #008080
 mypal = c("#ffa64c", "#b25a00", "#66b2b2", "#004c4c")
 mylvls = c("f_Mmut-ki/wt", "f_Mmut-ko/ki", "m_Mmut-ki/wt", "m_Mmut-ko/ki")
 
 # create figures path
 system("mkdir Figs")
-system("mkdir Figs/v3")
-fig_path <- c("Figs/v3/")
+system("mkdir Figs/v19")
+fig_path <- c("Figs/v19/")
+
+system("mkdir Figs")
+system("mkdir Figs/tablesv19")
+fig_tbl_path <- c("Figs/tablesv19/")
 
 
 
@@ -30,8 +42,10 @@ fig_path <- c("Figs/v3/")
 ####################################################################
 
 # theme & info:
-# avg. body surface temp
-# Fig2A is histology
+# Fig2ab are histology
+# c. avg. body surface temp
+# d. plasma leptin
+# e. plasma leptin vs fat mass
 
 ####################################################################
 # DATA IMPORT AND TIDY
@@ -126,7 +140,7 @@ plot_leptin_fat <-
 ggplot(tbl1c_supp, aes(x = fat, y = value, color = type)) +
 	geom_point() +
 	geom_smooth(method = "lm", se = FALSE) +
- 	# stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..r.label.., ..p.label.., sep = "~`,`~")))+
+ 	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..r.label.., ..p.label.., sep = "~`,`~")), cor.coef.name = "rho")+
 	ylab("Plasma leptin [pg/mL]") +
 	xlab("Fat mass [g]") +
 	theme_pubr() +
@@ -146,25 +160,6 @@ dev.off()
 
 ggsave(paste(fig_path, "Fig2.pdf", sep = ""), plt2, device = "pdf", width = 2.5, height = 8, bg = "white")
 dev.off()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

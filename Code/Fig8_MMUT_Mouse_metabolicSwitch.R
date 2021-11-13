@@ -1,5 +1,14 @@
-# wd
-Dropbox/PF/Post_PhD/Zurich_2019_2022/MMUT_Mouse_metabolicSwitch
+### METABOLIC SWITCH IN A MOUSE MODEL OF METHYLMALONIC ACIDURIA
+# FIGURE 8
+
+# author: Patrick Forny
+
+# run R one level above the Code directory. Create folders Data and Figs to start with.
+## folders:
+# Code: scripts
+# Data: data for analyses
+# Figs: output of analyses
+
 
 # libraries
 require(data.table)
@@ -9,19 +18,25 @@ require(readxl)
 require(ggpubr)
 require(org.Mm.eg.db)
 
+library(pheatmap)
+library(viridis)
+library(ggplotify)
 
 # color pallette (manual): order:
 # female-KI/WT; female-KO/KI
 # male_KI/WT; male-KO/KI
-# middle color female: #FF8100
-# middle color male: #008080
 mypal = c("#ffa64c", "#b25a00", "#66b2b2", "#004c4c")
 mylvls = c("f_Mmut-ki/wt", "f_Mmut-ko/ki", "m_Mmut-ki/wt", "m_Mmut-ko/ki")
 
 # create figures path
 system("mkdir Figs")
-system("mkdir Figs/v3")
-fig_path <- c("Figs/v3/")
+system("mkdir Figs/v19")
+fig_path <- c("Figs/v19/")
+
+system("mkdir Figs")
+system("mkdir Figs/tablesv19")
+fig_tbl_path <- c("Figs/tablesv19/")
+
 
 fig_path_wiki <- c("Data/Fig8/Project_pathway_Wikipathway/")
 
@@ -120,7 +135,7 @@ write.csv(df, file = paste(fig_path_wiki, "WP495.csv", sep = ""))
 
 
 
-# XX. heatmap for entirety of PPAR 
+# heatmap for entirety of PPAR 
 
 tbl5e_supp <- tbl8_microarray[, c(1, 33:51)] # linear values
 colnames(tbl5e_supp)[1] <- "gene"
@@ -245,17 +260,16 @@ rownames(tbl8gg_mat) <- tbl8gg$gene
 
 
 
-# further variables for plotting
-
-margs = c(0.5, 0.5, 0.5, 0.5)
-margin = theme(plot.margin = unit(margs, "cm"))
-
-
 
 
 ####################################################################
 # PLOTS AND ARRANGE AND SAVE
 ####################################################################
+
+margs = c(0.5, 0.5, 0.5, 0.5)
+margin = theme(plot.margin = unit(margs, "cm"))
+
+
 
 
 compare <- list(c("m_Mmut-ki/wt", "m_Mmut-ko/ki"))
@@ -294,18 +308,13 @@ ggplot(tbl8b, aes(x = type, y = value)) +
 
 # xx. PPAR all genes
 
-
-library(pheatmap)
-library(viridis)
-library(ggplotify)
-
 a <- c(mypal[3], mypal[4])
 names(a) <- c(mylvls[3], mylvls[4])
 ann_colors = list(type = a)
 
 
 plt5_PPARall_supp <- 
-as.ggplot(pheatmap(tbl5_PPARall_supp_mat, fontsize_row = 5, scale = "row", annotation_col = df_types, cutree_cols = 1, cutree_rows = 1, show_colnames = FALSE, annotation_colors = ann_colors, border_color = NA, color = inferno(100))) + ggtitle("PPAR") + margin + theme(plot.title = element_text(hjust = 0.5))
+as.ggplot(pheatmap(tbl5_PPARall_supp_mat, fontsize_row = 6, scale = "row", annotation_col = df_types, cutree_cols = 2, cutree_rows = 1, annotation_legend = FALSE, treeheight_col = 0, show_colnames = FALSE, annotation_colors = ann_colors, border_color = NA, color = inferno(100))) + ggtitle("PPAR") + margin + theme(plot.title = element_text(hjust = 0.5))
 
 
 
@@ -331,17 +340,13 @@ ggplot(tbl8c, aes(x = type, y = value)) +
 
 # d. fao htmp
 
-library(pheatmap)
-library(viridis)
-library(ggplotify)
-
 a <- c(mypal[3], mypal[4])
 names(a) <- c(mylvls[3], mylvls[4])
 ann_colors = list(type = a)
 
 
 plt8d <- 
-as.ggplot(pheatmap(tbl8d_mat, fontsize_row = 5, scale = "row", annotation_col = df_types, cutree_cols = 2, cutree_rows = 2, show_colnames = FALSE, annotation_colors = ann_colors, border_color = NA, color = inferno(100))) + ggtitle("Fatty acid degradation") + margin + theme(plot.title = element_text(hjust = 0.5))
+as.ggplot(pheatmap(tbl8d_mat, fontsize_row = 6, scale = "row", annotation_col = df_types, cutree_cols = 2, cutree_rows = 2, show_colnames = FALSE, annotation_legend = FALSE, treeheight_col = 0, annotation_colors = ann_colors, border_color = NA, color = inferno(100))) + ggtitle("Fatty acid degradation") + margin + theme(plot.title = element_text(hjust = 0.5))
 
 
 
@@ -386,28 +391,7 @@ ggplot(tbl8f, aes(x = type, y = value)) +
 
 
 
-# g. glutathione htmp
-
-library(pheatmap)
-library(viridis)
-library(ggplotify)
-
-a <- c(mypal[3], mypal[4])
-names(a) <- c(mylvls[3], mylvls[4])
-ann_colors = list(type = a)
-
-
-plt8g <- 
-as.ggplot(pheatmap(tbl8g_mat, scale = "row", cluster_cols = TRUE, annotation_col = df_types, cutree_cols = 1, cutree_rows = 1, show_colnames = FALSE, annotation_colors = ann_colors, border_color = NA, color = inferno(100))) + ggtitle("Glutathione metabolism") + margin + theme(plot.title = element_text(hjust = 0.5))
-
-
-
 # gg. ETC htmp
-
-library(pheatmap)
-library(viridis)
-library(ggplotify)
-
 
 colnames(tbl8gg)
 df_types <- data.frame(type = factor(c(rep(mylvls[4], 10), rep(mylvls[3], 9)), ordered = TRUE))
@@ -427,7 +411,7 @@ ann_colors = list(type = color_type, complex = color_complex)
 
 
 plt8gg <- 
-as.ggplot(pheatmap(tbl8gg_mat, fontsize_row = 5, scale = "row", cluster_cols = TRUE, cluster_rows = FALSE, annotation_col = df_types, annotation_row = df_complex, annotation_names_row = TRUE, cutree_cols = 2, cutree_rows = 1, show_colnames = FALSE, annotation_colors = ann_colors, border_color = NA, color = inferno(100))) + ggtitle("Electron transport chain") + margin + theme(plot.title = element_text(hjust = 0.5))
+as.ggplot(pheatmap(tbl8gg_mat, fontsize_row = 6, scale = "row", cluster_cols = TRUE, cluster_rows = FALSE, annotation_col = df_types, annotation_row = df_complex, annotation_names_row = TRUE, cutree_cols = 2, cutree_rows = 1, show_colnames = FALSE, annotation_colors = ann_colors, border_color = NA, color = inferno(100))) + ggtitle("Electron transport chain") + margin + theme(plot.title = element_text(hjust = 0.5))
 
 
 
