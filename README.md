@@ -6,7 +6,7 @@ Repository curator: Patrick Forny
 
 **Instructions**
 
-Download the folders _Data_ and _Code_ and save in the same directory. Run R in the directory where both folders are located and follow the scripts for the individual figures.
+Download the folders _Data_ and _Code_ and save in the same directory. Run R in the directory where both folders are located and follow the scripts for specific analyses.
 
 **Abstract of the paper**
 
