@@ -55,7 +55,7 @@ fig_tbl_path <- c("Figs/tablesv19/")
 
 # glucose over time
 
-tbl7e <- data.table(read_excel("Data/Fig7/PF_Fig7E_glcOverTime.xlsx"))
+tbl7e <- data.table(read_excel("Data/SuppFig5/PF_glcOverTime.xlsx"))
 colnames(tbl7e)
 
 fkoki7e00 <- tbl7e[, c(2:9)]

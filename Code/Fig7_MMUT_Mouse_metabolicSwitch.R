@@ -88,25 +88,6 @@ tbl7d <- data.table(read_excel("Data/Fig7/PF_Fig7D_mmaInLiver.xlsx"))
 tbl7d$type <- factor(tbl7d$type, levels = mylvls)
 
 
-# e. glucose over time
-
-tbl7e <- data.table(read_excel("Data/Fig7/PF_Fig7E_glcOverTime.xlsx"))
-colnames(tbl7e)
-
-fkoki7e00 <- tbl7e[, c(2:9)]
-fkoki7e0 <- fkoki7e00 %>% rowwise() %>% mutate(mean = mean(c_across(where(is.numeric))), sd = sd(c_across(where(is.numeric))))
-fkoki7e <- cbind(data.table(fkoki7e0[, c("mean", "sd")]), 
-	type = rep(mylvls[2], length(fkoki7e0$mean)),
-	time = tbl7e$time)
-
-fkiwt7e00 <- tbl7e[, c(10:17)]
-fkiwt7e0 <- fkiwt7e00 %>% rowwise() %>% mutate(mean = mean(c_across(where(is.numeric))), sd = sd(c_across(where(is.numeric))))
-fkiwt7e <- cbind(data.table(fkiwt7e0[, c("mean", "sd")]), 
-	type = rep(mylvls[1], length(fkiwt7e0$mean)),
-	time = tbl7e$time)
-
-f7e <- rbind(fkiwt7e, fkoki7e)
-
 
 
 

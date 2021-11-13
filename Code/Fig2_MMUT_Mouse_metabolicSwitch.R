@@ -55,7 +55,7 @@ fig_tbl_path <- c("Figs/tablesv19/")
 
 # a. body surface temperature
 
-tbl2b <- data.table(read_excel("Data/Fig2/PF_Fig2B.xlsx"))
+tbl2b <- data.table(read_excel("Data/Fig2/PF_bodyTemp.xlsx"))
 colnames(tbl2b) <- mylvls
 tbl2b_melt <- melt.data.table(tbl2b)
 tbl2b_melt <- tbl2b_melt[!is.na(value), ]
@@ -68,7 +68,7 @@ compare2b <- list(c(mylvls[1], mylvls[2]), c(mylvls[3], mylvls[4]))
 
 # b. leptin
 
-tbl1b_supp <- data.table(read_excel("Data/SuppFig1/PF_SuppFig1_leptin.xlsx"))
+tbl1b_supp <- data.table(read_excel("Data/Fig2/PF_leptin.xlsx"))
 setnames(tbl1b_supp, mylvls)
 tbl1b_supp <- melt.data.table(tbl1b_supp, measure.vars = mylvls)
 tbl1b_supp$value <- as.numeric(tbl1b_supp$value)
@@ -79,7 +79,7 @@ setnames(tbl1b_supp, c("type", "leptin"))
 
 # c. leptin / fat mass
 
-tbl1c_supp <- data.table(read_excel("Data/SuppFig1/PF_SuppFig1_fatVSleptin.xlsx"))
+tbl1c_supp <- data.table(read_excel("Data/Fig2/PF_fatVSleptin.xlsx"))
 setnames(tbl1c_supp, c("fat", mylvls))
 tbl1c_supp <- as.data.table(sapply(tbl1c_supp, as.numeric))
 tbl1c_supp <- melt.data.table(tbl1c_supp, id.vars = "fat")

@@ -95,7 +95,7 @@ tbl5b_supp$variable <- factor(tbl5b_supp$variable, levels = c(mylvls[3], mylvls[
 
 # GSEA KEGG pathways
 
-tbl5d_supp <- data.table(read_excel("Data/SuppFig5/PF_SuppFig5_GSEA_KEGG.xlsx"))
+tbl5d_supp <- data.table(read_excel("Data/SuppFig6/PF_SuppFig5_GSEA_KEGG.xlsx"))
 setorder(tbl5d_supp, NES)
 tbl5d_supp$Description <- factor(tbl5d_supp$Description, levels = tbl5d_supp$Description)
 
@@ -105,7 +105,7 @@ tbl5d_supp$Description <- factor(tbl5d_supp$Description, levels = tbl5d_supp$Des
 
 tbl5e_supp <- tbl5_supp_microarray[, c(1, 33:51)] # linear values
 colnames(tbl5e_supp)[1] <- "gene"
-fao_genes <- data.table(read_excel("Data/SuppFig5/PF_SuppFig5_faoGenesALL.xlsx"))
+fao_genes <- data.table(read_excel("Data/SuppFig6/PF_SuppFig5_faoGenesALL.xlsx"))
 matcher = match(fao_genes$fao_genes_all, tbl5e_supp$gene)
 tbl5e_supp <- tbl5e_supp[matcher, ]
 tbl5e_supp <- tbl5e_supp[!is.na(gene), ]
@@ -123,7 +123,7 @@ rownames(df_types) = colnames(tbl5e_supp_mat)
 
 tbl5f_supp <- tbl5_supp_microarray[, c(1, 33:51)] # linear values
 colnames(tbl5f_supp)[1] <- "gene"
-glc_transp_genes <- data.table(read_excel("Data/SuppFig5/PF_SuppFig5_glucoseTransporterGenesALL.xlsx"))
+glc_transp_genes <- data.table(read_excel("Data/SuppFig6/PF_SuppFig5_glucoseTransporterGenesALL.xlsx"))
 matcher = match(glc_transp_genes$glc_transp_genes, tbl5f_supp$gene)
 tbl5f_supp <- tbl5f_supp[matcher, ]
 tbl5f_supp <- tbl5f_supp[!is.na(gene), ]
@@ -140,7 +140,7 @@ rownames(df_types) = colnames(tbl5f_supp_mat)
 
 tbl5g_supp <- tbl5_supp_microarray[, c(1, 33:51)] # linear values
 colnames(tbl5g_supp)[1] <- "gene"
-gylco_genes <- data.table(read_excel("Data/SuppFig5/PF_SuppFig5_glycogluconeoGenesALL.xlsx"))
+gylco_genes <- data.table(read_excel("Data/SuppFig6/PF_SuppFig5_glycogluconeoGenesALL.xlsx"))
 matcher = match(gylco_genes$glyo_gluco_genes_all, tbl5g_supp$gene)
 tbl5g_supp <- tbl5g_supp[matcher, ]
 tbl5g_supp <- tbl5g_supp[!is.na(gene), ]
@@ -157,7 +157,7 @@ rownames(df_types) = colnames(tbl5g_supp_mat)
 
 tbl5h_supp <- tbl5_supp_microarray[, c(1, 33:51)] # linear values
 colnames(tbl5h_supp)[1] <- "gene"
-keto_genes <- data.table(read_excel("Data/SuppFig5/PF_SuppFig5_ketonegenesALL.xlsx"))
+keto_genes <- data.table(read_excel("Data/SuppFig6/PF_SuppFig5_ketonegenesALL.xlsx"))
 matcher = match(keto_genes$ketone_genes_all, tbl5h_supp$gene)
 tbl5h_supp <- tbl5h_supp[matcher, ]
 tbl5h_supp <- tbl5h_supp[!is.na(gene), ]
@@ -173,7 +173,7 @@ rownames(df_types) = colnames(tbl5h_supp_mat)
 
 tbl5i_supp <- tbl5_supp_microarray[, c(1, 33:51)] # linear values
 colnames(tbl5i_supp)[1] <- "gene"
-gluta_genes <- data.table(read_excel("Data/SuppFig5/PF_SuppFig5_glutathioneGenes.xlsx"))
+gluta_genes <- data.table(read_excel("Data/SuppFig6/PF_SuppFig5_glutathioneGenes.xlsx"))
 matcher = match(gluta_genes$glutathione_genes, tbl5i_supp$gene)
 tbl5i_supp <- tbl5i_supp[matcher, ]
 tbl5i_supp <- tbl5i_supp[!is.na(gene), ]

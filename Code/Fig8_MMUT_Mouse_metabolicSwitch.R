@@ -189,7 +189,6 @@ tbl8c$location <- factor(tbl8c$location, levels = c("peroxisomal", "microsomal",
 
 tbl8d <- tbl8_microarray[, c(1, 33:51)] # linear values
 colnames(tbl8d)[1] <- "gene"
-# setnames(tbl8d, c("gene", rep("m_Mmut-ko/ki", 10), rep("m_Mmut-ki/wt", 9)))
 fao_genes <- data.table(read_excel("Data/Fig8/PF_Fig8D_faoGenes.xlsx"))
 matcher = match(fao_genes$fao_genes, tbl8d$gene)
 tbl8d <- tbl8d[matcher, ]
