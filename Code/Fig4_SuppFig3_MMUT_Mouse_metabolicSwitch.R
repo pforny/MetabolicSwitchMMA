@@ -155,7 +155,7 @@ supp_o2 <-
 ggplot(o2_tbl3_melt, aes(x = bodyMass, y = value, color = type)) +
 	geom_point() +
 	geom_smooth(method = "lm", se = FALSE) +
-	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho")+
+	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho", show.legend = FALSE)+
 	ylab(expression("Mean O"[2]*" consumption [mL/min]")) +
 	xlab("Body mass [g]") +
 	facet_wrap(.~variable, labeller = phases) +
@@ -331,7 +331,7 @@ supp_food <-
 ggplot(food_tbl3_melt, aes(x = bodyMass, y = value, color = type)) +
 	geom_point() +
 	geom_smooth(method = "lm", se = FALSE) +
-	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho")+
+	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho", show.legend = FALSE)+
 	ylab("Mean food intake [g]") +
 	xlab("Body mass [g]") +
 	facet_wrap(.~variable, labeller = phases) +
@@ -504,7 +504,7 @@ supp_lox <-
 ggplot(lipid_tbl3_melt, aes(x = bodyMass, y = value, color = type)) +
 	geom_point() +
 	geom_smooth(method = "lm", se = FALSE) +
-	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho")+
+	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho", show.legend = FALSE)+
 	ylab("Mean lipid oxidation [mL/h]") +
 	xlab("Body mass [g]") +
 	facet_wrap(.~variable, labeller = phases) +
@@ -681,7 +681,7 @@ supp_cho <-
 ggplot(cho_tbl3_melt, aes(x = bodyMass, y = value, color = type)) +
 	geom_point() +
 	geom_smooth(method = "lm", se = FALSE) +
-	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho")+
+	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho", show.legend = FALSE)+
 	ylab("Mean CHO oxidation [mL/h]") +
 	xlab("Body mass [g]") +
 	facet_wrap(.~variable, labeller = phases) +
