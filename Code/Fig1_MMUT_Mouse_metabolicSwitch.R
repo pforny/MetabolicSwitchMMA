@@ -200,8 +200,30 @@ ggplot(tbl1_combo, aes(x = bw, y = fat, color = type)) +
 
 
 
+
+# d. fatMass body weight ratio
+
+max_val <- max(tbl1_combo$fat_bw_ratio)
+min_val <- min(tbl1_combo$fat_bw_ratio)
+
+plt1D <- 
+ggplot(tbl1_combo, aes(x = type, y = fat_bw_ratio, color = type, fill = type)) +
+	geom_boxplot(alpha = 0.6, outlier.shape = NA) +
+	geom_jitter(width = 0.1, aes(shape = cohort)) +
+	stat_compare_means(comparisons = compare, size = 3) +
+	ylab("Fat/body mass") +
+	ylim(0.9*min_val,1.1*max_val) +
+	theme_pubr() +
+	rotate_x_text(angle = 45) +
+	scale_fill_manual(values = mypal) +
+	scale_color_manual(values = mypal) +
+	theme(legend.title = element_blank(), legend.position = "none", axis.title.x = element_blank(), axis.text.x = element_blank()) +
+	margin
+
+
+
 plt1 <-
-ggarrange(plt1A, plt1B, plt1C, ggplot() + theme_void(), labels = c("a", "b", "c", "d"), align = "hv", common.legend = TRUE, legend = "right")
+ggarrange(plt1A, plt1B, plt1C, plt1D, labels = c("a", "b", "c", "d"), align = "hv", common.legend = TRUE, legend = "right")
 
 ggsave(paste(fig_path, "Fig1.png", sep = ""), plt1, device = png(), width = 8, height = 6, bg = "white")
 dev.off()
