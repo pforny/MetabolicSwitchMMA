@@ -28,12 +28,12 @@ mylvls = c("f_Mmut-ki/wt", "f_Mmut-ko/ki", "m_Mmut-ki/wt", "m_Mmut-ko/ki")
 
 # create figures path
 system("mkdir Figs")
-system("mkdir Figs/v19")
-fig_path <- c("Figs/v19/")
+system("mkdir Figs/v20")
+fig_path <- c("Figs/v20/")
 
 system("mkdir Figs")
-system("mkdir Figs/tablesv19")
-fig_tbl_path <- c("Figs/tablesv19/")
+system("mkdir Figs/tablesv20")
+fig_tbl_path <- c("Figs/tablesv20/")
 
 
 
@@ -155,7 +155,7 @@ supp_o2 <-
 ggplot(o2_tbl3_melt, aes(x = bodyMass, y = value, color = type)) +
 	geom_point() +
 	geom_smooth(method = "lm", se = FALSE) +
-	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho", show.legend = FALSE)+
+	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, cor.coef.name = "rho", show.legend = FALSE)+
 	ylab(expression("Mean O"[2]*" consumption [mL/min]")) +
 	xlab("Body mass [g]") +
 	facet_wrap(.~variable, labeller = phases) +
@@ -331,7 +331,7 @@ supp_food <-
 ggplot(food_tbl3_melt, aes(x = bodyMass, y = value, color = type)) +
 	geom_point() +
 	geom_smooth(method = "lm", se = FALSE) +
-	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho", show.legend = FALSE)+
+	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, cor.coef.name = "rho", show.legend = FALSE)+
 	ylab("Mean food intake [g]") +
 	xlab("Body mass [g]") +
 	facet_wrap(.~variable, labeller = phases) +
@@ -504,7 +504,7 @@ supp_lox <-
 ggplot(lipid_tbl3_melt, aes(x = bodyMass, y = value, color = type)) +
 	geom_point() +
 	geom_smooth(method = "lm", se = FALSE) +
-	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho", show.legend = FALSE)+
+	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, cor.coef.name = "rho", show.legend = FALSE)+
 	ylab("Mean lipid oxidation [mL/h]") +
 	xlab("Body mass [g]") +
 	facet_wrap(.~variable, labeller = phases) +
@@ -681,7 +681,7 @@ supp_cho <-
 ggplot(cho_tbl3_melt, aes(x = bodyMass, y = value, color = type)) +
 	geom_point() +
 	geom_smooth(method = "lm", se = FALSE) +
-	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, aes(label = paste(..p.label.., sep = "~`,`~")), cor.coef.name = "rho", show.legend = FALSE)+
+	stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, size = 3, cor.coef.name = "rho", show.legend = FALSE)+
 	ylab("Mean CHO oxidation [mL/h]") +
 	xlab("Body mass [g]") +
 	facet_wrap(.~variable, labeller = phases) +
@@ -1020,13 +1020,13 @@ dev.off()
 
 
 supp_fig3 <- 
-ggarrange(supp_o2+margin, supp_cho+margin, supp_lox+margin, supp_food+margin, common.legend = TRUE, labels = "auto")
+ggarrange(supp_o2+margin+ylim(20,160), supp_cho+margin+ylim(0,2.1), supp_lox+margin+ylim(0.1,1.1), supp_food+margin+ylim(0,0.12), common.legend = TRUE, labels = "auto")
 
 
-ggsave(paste(fig_path, "SuppFig3.png", sep = ""), supp_fig3, device = png(), width = 9, height = 6.5, bg = "white")
+ggsave(paste(fig_path, "SuppFig3.png", sep = ""), supp_fig3, device = png(), width = 9, height = 7.5, bg = "white")
 dev.off()
 
-ggsave(paste(fig_path, "SuppFig3.pdf", sep = ""), supp_fig3, device = "pdf", width = 9, height = 6.5, bg = "white")
+ggsave(paste(fig_path, "SuppFig3.pdf", sep = ""), supp_fig3, device = "pdf", width = 9, height = 7.5, bg = "white")
 dev.off()
 
 

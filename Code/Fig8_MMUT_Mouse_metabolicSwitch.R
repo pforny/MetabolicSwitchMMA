@@ -17,7 +17,7 @@ require(tidyverse)
 require(readxl)
 require(ggpubr)
 require(org.Mm.eg.db)
-
+library(RColorBrewer)
 library(pheatmap)
 library(viridis)
 library(ggplotify)
@@ -30,12 +30,12 @@ mylvls = c("f_Mmut-ki/wt", "f_Mmut-ko/ki", "m_Mmut-ki/wt", "m_Mmut-ko/ki")
 
 # create figures path
 system("mkdir Figs")
-system("mkdir Figs/v19")
-fig_path <- c("Figs/v19/")
+system("mkdir Figs/v20")
+fig_path <- c("Figs/v20/")
 
 system("mkdir Figs")
-system("mkdir Figs/tablesv19")
-fig_tbl_path <- c("Figs/tablesv19/")
+system("mkdir Figs/tablesv20")
+fig_tbl_path <- c("Figs/tablesv20/")
 
 
 fig_path_wiki <- c("Data/Fig8/Project_pathway_Wikipathway/")
@@ -402,9 +402,11 @@ df_complex <- data.frame(complex = complex)
 rownames(df_complex) = rownames(tbl8gg_mat)
 df_complex <- df_complex[order(df_complex$complex), , drop = FALSE]
 
+
+
 color_type <- c(mypal[3], mypal[4])
 names(color_type) <- c(mylvls[3], mylvls[4])
-color_complex <- c("#19198c", "#19198c", "#6666b2", "#b2b2d8", "#e5e5f2")
+color_complex <- brewer.pal(n = 5, name = 'Purples')
 names(color_complex) <- sort(unique(df_complex$complex))
 ann_colors = list(type = color_type, complex = color_complex)
 
