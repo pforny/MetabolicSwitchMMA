@@ -1,6 +1,6 @@
 # Insights into energy balance dysregulation from a mouse model of methylmalonic aciduria
 
-This is the repository containing raw data and code allowing the reproduction of data analysis and generation of plots for the publication by Lucienne et al.
+This is the repository containing raw data and code allowing the reproduction of data analysis and generation of plots for the publication by Lucienne et al., available through the bioRxiv platform (https://www.biorxiv.org/content/10.1101/2021.11.30.470541v1).
 
 Repository curator: Patrick Forny
 
